@@ -1,0 +1,26 @@
+Source: ruby-kgio
+Section: ruby
+Priority: optional
+Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
+Uploaders: Hleb Valoshka <375gnu@gmail.com>
+Build-Depends: debhelper-compat (= 12),
+               gem2deb (>= 1.0~),
+               rake
+Standards-Version: 4.5.0
+Vcs-Git: https://salsa.debian.org/ruby-team/ruby-kgio.git
+Vcs-Browser: https://salsa.debian.org/ruby-team/ruby-kgio
+Homepage: https://bogomips.org/kgio/
+Testsuite: autopkgtest-pkg-ruby
+XS-Ruby-Versions: all
+
+Package: ruby-kgio
+Architecture: kfreebsd-any linux-any
+XB-Ruby-Versions: ${ruby:Versions}
+Depends: ruby | ruby-interpreter,
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: Kinder, gentler I/O for Ruby
+ kgio provides non-blocking I/O methods for Ruby without raising
+ exceptions on EAGAIN and EINPROGRESS. It is intended for use with the
+ Unicorn and Rainbows! Rack servers, but may be used by other
+ applications (that run on Unix-like platforms).

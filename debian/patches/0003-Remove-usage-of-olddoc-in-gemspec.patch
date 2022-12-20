@@ -1,0 +1,43 @@
+From: Hleb Valoshka <375gnu@gmail.com>
+Date: Fri, 18 Aug 2017 15:47:34 +0300
+Subject: Remove usage of olddoc in gemspec
+
+---
+ kgio.gemspec | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/kgio.gemspec b/kgio.gemspec
+index 17100c6..36ed655 100644
+--- a/kgio.gemspec
++++ b/kgio.gemspec
+@@ -1,19 +1,20 @@
+-ENV["VERSION"] or abort "VERSION= must be specified"
+ manifest = File.readlines('.manifest').map! { |x| x.chomp! }
+-require 'olddoc'
+-extend Olddoc::Gemspec
+-name, summary, title = readme_metadata
+ 
+ Gem::Specification.new do |s|
+   s.name = %q{kgio}
+-  s.version = ENV["VERSION"].dup
+-  s.homepage = Olddoc.config['rdoc_url']
+-  s.authors = ["#{name} hackers"]
+-  s.description = readme_description
++  s.version = '2.11.0'
++  s.homepage = 'https://bogomips.org/kgio/'
++  s.authors = ["kgio hackers"]
++  s.description = <<-END
++kgio provides non-blocking I/O methods for Ruby without raising
++exceptions on EAGAIN and EINPROGRESS.  It is intended for use with the
++Unicorn and Rainbows! Rack servers, but may be used by other
++applications (that run on Unix-like platforms).
++  END
+   s.email = %q{kgio-public@bogomips.org}
+-  s.extra_rdoc_files = extra_rdoc_files(manifest)
++  s.extra_rdoc_files = manifest.keep_if { |f| File.exist?(f) }
+   s.files = manifest
+-  s.summary = summary
++  s.summary = 'Kinder, gentler I/O for Ruby'
+   s.test_files = Dir['test/test_*.rb']
+   s.extensions = %w(ext/kgio/extconf.rb)
+ 

@@ -1,0 +1,26 @@
+From: Debian Ruby Extras Maintainers
+ <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
+Date: Fri, 18 Aug 2017 14:52:10 +0300
+Subject: fix-test-test_default_wait
+
+---
+ test/test_default_wait.rb | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/test/test_default_wait.rb b/test/test_default_wait.rb
+index 7137d0c..64ac6f7 100644
+--- a/test/test_default_wait.rb
++++ b/test/test_default_wait.rb
+@@ -39,7 +39,11 @@ class TestDefaultWait < Test::Unit::TestCase
+     diff = Time.now - t0
+     assert_in_delta diff, 1.1, 0.2
+ 
+-    a.kgio_read(16384)
++    # Read enough to ensure one kernel buffer is cleared
++    # to ensure that poll et al will start saying we have
++    # enough space to allow a write.  This should be at
++    # least the largest system page size we support.
++    a.kgio_read(65536)
+     assert_equal b, b.kgio_wait_writable(1.1)
+   end
+ end

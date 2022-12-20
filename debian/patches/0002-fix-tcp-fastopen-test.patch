@@ -1,0 +1,22 @@
+From: Debian Ruby Extras Maintainers
+ <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
+Date: Fri, 18 Aug 2017 14:52:10 +0300
+Subject: fix-tcp-fastopen-test
+
+---
+ test/test_tfo.rb | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/test_tfo.rb b/test/test_tfo.rb
+index 5ab208d..d8874bc 100644
+--- a/test/test_tfo.rb
++++ b/test/test_tfo.rb
+@@ -10,7 +10,7 @@ class TestTFO < Test::Unit::TestCase
+   end
+ 
+   def fastopen_ok?
+-    if RUBY_PLATFORM =~ /linux/
++    if RUBY_PLATFORM =~ /linux/ && File.exist?("/proc/sys/net/ipv4/tcp_fastopen")
+       tfo = File.read("/proc/sys/net/ipv4/tcp_fastopen").to_i
+       client_enable = 1
+       server_enable = 2
